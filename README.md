@@ -1,2 +1,2 @@
 # Games
-Some games implemented by me
+All games implemented by me
