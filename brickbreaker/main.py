@@ -35,6 +35,7 @@ def movepaddle(event):
         x = 0
         canvas.move(paddle, -5, 0)
 
+bricksDestroyed = 0
 def moveball():
     global block1
     global block2
@@ -50,12 +51,16 @@ def moveball():
     global rotationslistx
     global rotationslisty
     global rotationy
+    global startext
     canvas.move(ball,0,rotationy-3)
     if ballpos[3] >= paddlepos[3] and ballpos[2] > paddlepos[0] and ballpos[0] < paddlepos[2] and ballpos[1] < paddlepos[1]:
         random.shuffle(rotationslistx)
         rotationx = rotationslistx[0]
         rotationy = rotationslisty[1]
     if ballpos[1] > 800:
+        canvas.itemconfig(startext, state='normal', text='Вы проиграли :(', fill='red')
+        root.update()
+        root.update_idletasks()
         time.sleep(1)
         root.destroy()
     if ballpos[0] <= 0:
@@ -67,27 +72,40 @@ def moveball():
     if ballpos[3] >= block1[3] and ballpos[2] > block1[0] and ballpos[0] < block1[2] and ballpos[1] < block1[1] or ballpos[1] <= block1[1] and ballpos[2] > block1[0] and ballpos[0] < block1[2] and ballpos[3] > block1[1]:
         canvas.itemconfig(4,state='hidden')
         rotationy = rotationy * -1
+        bricksDestroyed += 1
         block1 = [0,0,0,0]
+
     if ballpos[3] >= block2[3] and ballpos[2] > block2[0] and ballpos[0] < block2[2] and ballpos[1] < block2[1] or ballpos[1] <= block2[1] and ballpos[2] > block2[0] and ballpos[0] < block2[2] and ballpos[3] > block2[1]:
         canvas.itemconfig(5,state='hidden')
         rotationy = rotationy * -1
+        bricksDestroyed += 1
         block2 = [0, 0, 0, 0]
     if ballpos[3] >= block3[3] and ballpos[2] > block3[0] and ballpos[0] < block3[2] and ballpos[1] < block3[1] or ballpos[1] <= block3[1] and ballpos[2] > block3[0] and ballpos[0] < block3[2] and ballpos[3] > block3[1]:
         canvas.itemconfig(6,state='hidden')
         rotationy = rotationy * -1
+        bricksDestroyed += 1
         block3 = [0, 0, 0, 0]
     if ballpos[3] >= block4[3] and ballpos[2] > block4[0] and ballpos[0] < block4[2] and ballpos[1] < block4[1] or ballpos[1] <= block4[1] and ballpos[2] > block4[0] and ballpos[0] < block4[2] and ballpos[3] > block4[1]:
         canvas.itemconfig(7,state='hidden')
         rotationy = rotationy * -1
+        bricksDestroyed += 1
         block4 = [0, 0, 0, 0]
     if ballpos[3] >= block5[3] and ballpos[2] > block5[0] and ballpos[0] < block5[2] and ballpos[1] < block5[1] or ballpos[1] <= block5[1] and ballpos[2] > block5[0] and ballpos[0] < block5[2] and ballpos[3] > block5[1]:
         canvas.itemconfig(8,state='hidden')
         rotationy = rotationy * -1
+        bricksDestroyed += 1
         block5 = [0, 0, 0, 0]
     if ballpos[3] >= block6[3] and ballpos[2] > block6[0] and ballpos[0] < block6[2] and ballpos[1] < block6[1] or ballpos[1] <= block6[1] and ballpos[2] > block6[0] and ballpos[0] < block6[2] and ballpos[3] > block6[1]:
         canvas.itemconfig(9,state='hidden')
         rotationy = rotationy * -1
+        bricksDestroyed += 1
         block6 = [0, 0, 0, 0]
+    if bricksDestroyed >= 6:
+        canvas.itemconfig(startext,state='normal',text='Вы выиграли!',fill='green')
+        root.update()
+        root.update_idletasks()
+        time.sleep(1)
+        root.destroy()
 
     canvas.move(ball,rotationx,rotationy)
     root.update()
